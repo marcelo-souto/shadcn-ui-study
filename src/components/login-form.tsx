@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { LoadingButton } from "@/components/ui/loading-button";
 
 import {
@@ -17,6 +16,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useMutation } from "@tanstack/react-query";
 
 const loginCredentialsSchema = z.object({
   email: z
@@ -24,7 +24,7 @@ const loginCredentialsSchema = z.object({
     .nonempty("Campo obrigatório.")
     .email("Insira um email válido."),
   password: z.string().nonempty("Campo obrigatório."),
-  terms: z.boolean().default(false).optional(),
+  terms: z.boolean().default(false),
 });
 
 type LoginCredentialsSchema = z.infer<typeof loginCredentialsSchema>;
@@ -40,13 +40,22 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = ({ email, password }: LoginCredentialsSchema) =>
-    console.log({ email, password });
+  const { mutate, isLoading, data } = useMutation({
+    mutationFn: ({ email, password, terms }: LoginCredentialsSchema) => {
+      return new Promise((resolve) =>
+        setTimeout(() => resolve({ email, password, terms }), 2000)
+      );
+    },
+    onSuccess: (data) => console.log(data),
+  });
+
+  const onSubmit = ({ email, password, terms }: LoginCredentialsSchema) =>
+    mutate({ email, password, terms });
 
   return (
     <main className="h-screen flex m-auto items-center">
       <div className="flex flex-col max-w-[320px] w-full space-y-8 m-auto animate-in fade-in-30 zoom-in-50 duration-300">
-        <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight lg:text-3xl">
+        <h1 className="scroll-m-20 text-2xl font-bold tracking-tight lg:text-3xl">
           Login
         </h1>
 
@@ -106,7 +115,9 @@ export default function LoginForm() {
               )}
             />
 
-            <LoadingButton isLoading={true} className="w-full font-medium">Entrar</LoadingButton>
+            <LoadingButton isLoading={isLoading} className="w-full font-medium">
+              Entrar
+            </LoadingButton>
           </form>
         </Form>
       </div>
