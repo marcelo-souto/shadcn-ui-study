@@ -21,9 +21,13 @@ const registerFieldsSchema = z.object({
     .string()
     .nonempty("Campo obrigatório.")
     .email("Insira um email válido."),
-  password: z.string().nonempty("Campo obrigatório.").regex((value) => {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g.test(value)
-  }),
+  password: z
+    .string()
+    .nonempty("Campo obrigatório.")
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g,
+      "A senha deve conter no mínimo 8 caracteres, uma letra maiúscula e um número."
+    ),
 });
 
 type RegisterFieldsSchema = z.infer<typeof registerFieldsSchema>;
@@ -40,7 +44,6 @@ export default function RegisterForm() {
   return (
     <main className="h-screen flex m-auto items-center">
       <div className="flex flex-col max-w-[320px] w-full space-y-8 m-auto animate-in fade-in-30 zoom-in-50 duration-300">
-
         <div className="space-y-3">
           <h1 className="scroll-m-20 text-2xl font-bold tracking-tight lg:text-3xl">
             Crie sua conta
@@ -94,6 +97,7 @@ export default function RegisterForm() {
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
                     <Input
+                      type="password"
                       className="hover:border-zinc-600 transition-all duration-300"
                       {...field}
                     />
