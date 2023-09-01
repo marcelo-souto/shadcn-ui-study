@@ -63,12 +63,14 @@ export default function LoginForm() {
   return (
     <main className="h-screen flex m-auto items-center">
       <div className="flex flex-col max-w-[320px] w-full space-y-8 m-auto animate-in fade-in-30 zoom-in-50 duration-300">
+        
         <h1 className="scroll-m-20 text-2xl font-bold tracking-tight lg:text-3xl">
           Login
         </h1>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+
             <FormField
               control={form.control}
               name="email"
@@ -126,8 +128,10 @@ export default function LoginForm() {
             <LoadingButton isLoading={isLoading} className="w-full font-medium">
               Entrar
             </LoadingButton>
+
           </form>
         </Form>
+
       </div>
     </main>
   );
