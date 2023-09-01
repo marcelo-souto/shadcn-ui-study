@@ -24,7 +24,7 @@ const loginCredentialsSchema = z.object({
     .nonempty("Campo obrigatório.")
     .email("Insira um email válido."),
   password: z.string().nonempty("Campo obrigatório."),
-  terms: z.boolean().default(false),
+  remind: z.boolean().default(false),
 });
 
 type LoginCredentialsSchema = z.infer<typeof loginCredentialsSchema>;
@@ -36,21 +36,29 @@ export default function LoginForm() {
     defaultValues: {
       email: "",
       password: "",
-      terms: false,
+      remind: false,
     },
   });
 
   const { mutate, isLoading, data } = useMutation({
-    mutationFn: ({ email, password, terms }: LoginCredentialsSchema) => {
-      return new Promise((resolve) =>
-        setTimeout(() => resolve({ email, password, terms }), 2000)
-      );
+
+    mutationFn: async ({ email, password }: Omit<LoginCredentialsSchema, "remind">) => {
+      
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      return data;
     },
     onSuccess: (data) => console.log(data),
   });
 
-  const onSubmit = ({ email, password, terms }: LoginCredentialsSchema) =>
-    mutate({ email, password, terms });
+  const onSubmit = ({ email, password }: LoginCredentialsSchema) =>
+    mutate({ email, password });
 
   return (
     <main className="h-screen flex m-auto items-center">
@@ -98,7 +106,7 @@ export default function LoginForm() {
 
             <FormField
               control={form.control}
-              name="terms"
+              name="remind"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-start space-x-2 space-y-0 ">
                   <FormControl>
