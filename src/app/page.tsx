@@ -1,13 +1,7 @@
-import type { Metadata } from "next";
+import React from 'react'
 
-import LoginForm from "@/components/login-form";
-
-export const metadata: Metadata = {
-  title: "Login",
-  description: "página de login do usuário",
-};
-
-export default function Home() {
-
-  return <LoginForm />;
+export default function HomePage() {
+  return (
+    <div>page</div>
+  )
 }
