@@ -17,7 +17,6 @@ const LoginFieldsSchema = z.object({
 type LoginProps = z.infer<typeof LoginFieldsSchema>;
 
 export default function useLoginForm() {
-  
   const form = useForm<LoginProps>({
     resolver: zodResolver(LoginFieldsSchema),
     mode: "all",
@@ -29,11 +28,10 @@ export default function useLoginForm() {
   });
 
   const { mutate, isLoading, isSuccess, data, isError, error } = useMutation({
-
-    mutationFn: ({ email, password }: UserCredentials) => authService.login({ email, password }),
-
+    mutationFn: ({ email, password }: UserCredentials) =>
+      authService.login({ email, password }),
     onSuccess: (data) => console.log(data),
-    onError: (error) => console.log(error),
+    onError: (error: Error) => console.log(error),
   });
 
   const onSubmit = ({ email, password }: LoginProps) =>

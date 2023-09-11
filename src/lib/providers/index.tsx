@@ -10,11 +10,15 @@ type ProvidersProps = {
   children: React.ReactNode;
 };
 
-export default function Providers({ children }: ProvidersProps) {
+const Providers = ({ children }: ProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
-}
+};
+
+Providers.displayName = "Providers";
+
+export { Providers };

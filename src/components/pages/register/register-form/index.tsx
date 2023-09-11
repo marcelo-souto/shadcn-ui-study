@@ -1,4 +1,5 @@
 "use client";
+
 import {
   FormControl,
   FormField,
@@ -9,10 +10,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { LoadingButton } from "@/components/ui/loading-button";
+
 import useRegisterForm from "./use-register-form";
 import Link from "next/link";
 
-export default function RegisterForm() {
+const RegisterForm = () => {
   const { form, onSubmit } = useRegisterForm();
 
   return (
@@ -95,4 +97,8 @@ export default function RegisterForm() {
       </span>
     </div>
   );
-}
+};
+
+RegisterForm.displayName = "RegisterForm";
+
+export { RegisterForm };

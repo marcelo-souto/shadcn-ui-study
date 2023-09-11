@@ -16,7 +16,7 @@ import useLoginForm from "./use-login-form";
 import Link from "next/link";
 import { AlertOctagon } from "lucide-react";
 
-export default function LoginForm() {
+const LoginForm = () => {
   
   const { form, onSubmit, isLoading, isSuccess, isError, data, error } = useLoginForm();
 
@@ -104,4 +104,8 @@ export default function LoginForm() {
       </span>
     </div>
   );
-}
+};
+
+LoginForm.displayName = "LoginForm";
+
+export { LoginForm };

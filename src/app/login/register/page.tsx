@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import RegisterForm from "@/features/register/register-form";
+import { RegisterForm } from "@/components/pages/register/register-form";
 
 export const metadata: Metadata = {
   title: "Cadastre-se",

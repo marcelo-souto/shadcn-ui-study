@@ -20,7 +20,6 @@ const registerFieldsSchema = z.object({
 type RegisterFieldsProps = z.infer<typeof registerFieldsSchema>;
 
 export default function useRegisterForm() {
-  
   const form = useForm<RegisterFieldsProps>({
     mode: "all",
     resolver: zodResolver(registerFieldsSchema),
