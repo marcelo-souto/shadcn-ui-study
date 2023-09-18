@@ -39,7 +39,6 @@ import {
 } from "@/components/ui/dialog";
 
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { useRef } from "react";
 
 const RegisterEmployeeForm = () => {
   

@@ -19,3 +19,10 @@ export type User = {
   email: string;
   password: string;
 };
+
+export type Game = {
+  title: string;
+  image: string;
+  category: string;
+  description: string;
+};
