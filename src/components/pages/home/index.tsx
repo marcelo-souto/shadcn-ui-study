@@ -18,6 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Container } from "@/components/ui/container";
 
 const games = [
   {
@@ -52,6 +53,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col justify-center h-screen max-w-fit m-auto">
+      <Container as="h1">TESTE AQUI</Container>
       <motion.h1
         className="font-bold capitalize text-2xl mb-4 text-zinc-600"
         initial={{ y: -50, opacity: 0 }}
