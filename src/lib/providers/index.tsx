@@ -5,6 +5,7 @@ import queryClient from "../react-query/query-client";
 
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ThemeProvider } from "next-themes";
 
 type ProvidersProps = {
   children: React.ReactNode;
@@ -13,7 +14,7 @@ type ProvidersProps = {
 const Providers = ({ children }: ProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <ThemeProvider defaultTheme="dark" attribute="class">{children}</ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

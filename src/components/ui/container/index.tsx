@@ -1,14 +1,22 @@
-import { HTMLProps, createElement } from "react";
+import { cn } from "@/lib/utils";
+import { ReactNode, createElement, ElementType } from "react";
 
-type ContainerProps<T extends keyof JSX.IntrinsicElements> = {
+type ContainerProps<T extends ElementType> = {
   as?: T;
-} & HTMLProps<JSX.IntrinsicElements[T]>;
+  children?: ReactNode;
+} & Omit<React.ComponentProps<T>, "as" | keyof JSX.IntrinsicElements>;
 
-const Container = <T extends keyof JSX.IntrinsicElements>({
+const Container = <T extends ElementType>({
   as: Element = "div" as T,
+  className,
   ...props
 }: ContainerProps<T>) => {
-  return createElement(Element, { ...props });
+
+  return createElement(Element, {
+    ...props,
+    className: cn("w-full max-w-5xl mx-auto", className),
+  });
+
 };
 
 Container.displayName = "Container";
