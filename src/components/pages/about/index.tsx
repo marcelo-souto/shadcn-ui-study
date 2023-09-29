@@ -32,7 +32,6 @@ const navItems = [
 ];
 
 const About = () => {
-
   const [isOpen, setIsOpen] = useState(false);
   const { width } = useWindowSize();
 
