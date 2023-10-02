@@ -3,14 +3,14 @@ import { fetchData } from "@/utils/functions/fetch-data";
 
 async function getCurrent(token: string) {
   
-  const { data, error } = await fetchData<User>(
+  const response = await fetchData<User>(
     "http://localhost:3000/user/me",
     { headers: { Authorization: `Bearer ${token}` } }
   );
 
-  if (error) throw new Error(error);
+  if (response.isLeft()) throw new Error(response.value.message);
 
-  return data;
+  return response.value;
 }
 
 export const userService = { getCurrent };

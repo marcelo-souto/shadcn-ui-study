@@ -26,3 +26,10 @@ export type Game = {
   category: string;
   description: string;
 };
+
+export type Post = {
+  id: number;
+  title: string;
+  body: string;
+  userId: number;
+};
