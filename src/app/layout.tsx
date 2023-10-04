@@ -1,3 +1,4 @@
+import { Header } from "@/components/common/header";
 import "./globals.css";
 
 import { Providers } from "@/lib/providers";
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

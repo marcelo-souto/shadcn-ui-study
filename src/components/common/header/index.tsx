@@ -1,7 +1,3 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { Container } from "@/components/ui/container";
 import {
   Sheet,
   SheetContent,
@@ -9,12 +5,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Switch } from "@/components/ui/switch";
-import { useWindowSize } from "@/utils/hooks/use-window-size";
-import { Menu as MenuIcon, MoonIcon, SunMediumIcon } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { Menu as MenuIcon } from "lucide-react";
+import { ThemeSwitch } from "@/components/common/theme-switch";
+
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
 
 const navItems = [
   {
@@ -31,25 +27,17 @@ const navItems = [
   },
 ];
 
-const About = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { width } = useWindowSize();
-
-  useMemo(() => {
-    if (width > 640) setIsOpen(false);
-  }, [width]);
-
+const Header = () => {
   return (
     <Container
       as="header"
       className="flex items-center px-4 py-2 justify-between bg-zinc-200 dark:bg-zinc-900 rounded-xl h-[52px] max-w-[1200px] my-4 shadow-lg"
     >
-      <h1 className="text-lg font-bold text-indigo-500 p-4">Logo</h1>
+      <h1 className="text-lg font-bold text-xinc-800 dark:text-white p-4">
+        Logo
+      </h1>
 
-      <Sheet
-        open={isOpen}
-        onOpenChange={() => setIsOpen((previousState) => !previousState)}
-      >
+      <Sheet>
         <SheetTrigger className="sm:hidden">
           <MenuIcon />
         </SheetTrigger>
@@ -71,6 +59,9 @@ const About = () => {
                 </Button>
               </li>
             ))}
+            <li>
+              <ThemeSwitch />
+            </li>
           </ul>
         </SheetContent>
       </Sheet>
@@ -84,12 +75,15 @@ const About = () => {
               </Button>
             </li>
           ))}
+          <li className="flex items-center gap-2">
+            <ThemeSwitch />
+          </li>
         </ul>
       </nav>
     </Container>
   );
 };
 
-About.displayName = "About";
+Header.displayName = "Header";
 
-export { About };
+export { Header };

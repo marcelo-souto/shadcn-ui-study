@@ -14,7 +14,7 @@ type ProvidersProps = {
 const Providers = ({ children }: ProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="dark" attribute="class">{children}</ThemeProvider>
+      <ThemeProvider attribute="class">{children}</ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
