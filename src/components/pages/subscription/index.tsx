@@ -13,29 +13,17 @@ import { Input } from "@/components/ui/input";
 import { subscribeAction } from "@/lib/actions/subscribe";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { useToast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
-
-const subscriptionFieldsSchema = z.object({
-  name: z.string().nonempty({ message: "Nome é obrigatório" }),
-  email: z.string().email({ message: "Email inválido" }),
-  password: z
-    .string()
-    .nonempty({ message: "Senha é obrigatória" })
-    .min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
-});
-
-type TSubscriptionFields = z.infer<typeof subscriptionFieldsSchema>;
+import { TSubscriptionFields, subscriptionSchema } from "@/types/types";
 
 const Subscription = () => {
-  
   const { toast } = useToast();
 
   const form = useForm<TSubscriptionFields>({
     mode: "all",
-    resolver: zodResolver(subscriptionFieldsSchema),
+    resolver: zodResolver(subscriptionSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -49,9 +37,9 @@ const Subscription = () => {
     if (result) {
       const response = await subscribeAction(formData);
       return toast({
-        title: "Parabéns!",
+        title: response.success ? "Sucesso" : "Erro",
         description: response.message,
-        variant: "default",
+        variant: response.success ? "default" : "destructive",
       });
     }
   };
@@ -77,7 +65,6 @@ const Subscription = () => {
         <h1 className="text-3xl font-semibold mb-6">Inscreva-se</h1>
         <Form {...form}>
           <form action={onSubmitAction} className="flex flex-col gap-4">
-
             <FormField
               control={form.control}
               name="name"
@@ -123,7 +110,6 @@ const Subscription = () => {
             <SubmitButton>Enviar</SubmitButton>
           </form>
         </Form>
-
       </motion.div>
     </Container>
   );
