@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import {
   Form,
@@ -11,79 +10,121 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { subscriptionAction } from "@/lib/actions/subscription";
+import { subscribeAction } from "@/lib/actions/subscribe";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { useToast } from "@/components/ui/use-toast";
+import { motion } from "framer-motion";
 
 const subscriptionFieldsSchema = z.object({
   name: z.string().nonempty({ message: "Nome é obrigatório" }),
   email: z.string().email({ message: "Email inválido" }),
+  password: z
+    .string()
+    .nonempty({ message: "Senha é obrigatória" })
+    .min(6, { message: "Senha deve ter no mínimo 6 caracteres" }),
 });
 
 type TSubscriptionFields = z.infer<typeof subscriptionFieldsSchema>;
 
 const Subscription = () => {
   
+  const { toast } = useToast();
+
   const form = useForm<TSubscriptionFields>({
     mode: "all",
     resolver: zodResolver(subscriptionFieldsSchema),
     defaultValues: {
       name: "",
       email: "",
+      password: "",
     },
   });
 
-  const onSubmit = (data: TSubscriptionFields) => {
-    const formData = new FormData();
+  const onSubmitAction = async (formData: FormData) => {
+    const result = await form.trigger();
 
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-
-    subscriptionAction(formData);
+    if (result) {
+      const response = await subscribeAction(formData);
+      return toast({
+        title: "Parabéns!",
+        description: response.message,
+        variant: "default",
+      });
+    }
   };
 
   return (
-    <Container as="main" className="max-w-xs">
-      <h1 className="text-xl font-semibold mb-6">Inscreva-se</h1>
+    <Container
+      as="main"
+      className="flex justify-center items-center w-screen min-h-screen"
+    >
+      <motion.div
+        className="max-w-[340px] w-full"
+        initial={{ opacity: 0, y: 100 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          transition: {
+            duration: 0.3,
+            type: "spring",
+            stiffness: 200,
+          },
+        }}
+      >
+        <h1 className="text-3xl font-semibold mb-6">Inscreva-se</h1>
+        <Form {...form}>
+          <form action={onSubmitAction} className="flex flex-col gap-4">
 
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-6"
-        >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Nome</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Nome</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="usuario@email.com" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="usuario@email.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button size="sm">Enviar</Button>
-        </form>
-      </Form>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Senha</FormLabel>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <SubmitButton>Enviar</SubmitButton>
+          </form>
+        </Form>
+
+      </motion.div>
     </Container>
   );
 };
