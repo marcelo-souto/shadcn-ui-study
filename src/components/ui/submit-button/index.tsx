@@ -20,6 +20,7 @@ const SubmitButton = ({
   return (
     <Button
       className={cn(buttonVariants({ variant, size, className }))}
+      type="submit"
       disabled={pending}
       {...props}
     >

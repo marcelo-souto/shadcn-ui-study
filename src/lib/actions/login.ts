@@ -1,7 +1,4 @@
-"use server";
-
-import { subscriptionSchema } from "@/types/types";
-import { redirect } from "next/navigation";
+import { userCredentials, TUserCredentials } from "@/types/types";
 
 const users = [
   {
@@ -30,16 +27,14 @@ const users = [
   },
 ];
 
-export async function subscribeAction(formData: FormData) {
-  
-  const name = formData.get("name");
+export async function loginAction(formData: FormData) {
+
   const email = formData.get("email");
   const password = formData.get("password");
 
-  const result = subscriptionSchema.safeParse({ name, email, password });
+  const result = userCredentials.safeParse({ email, password });
 
   if (!result.success) {
-    
     const errors = result.error.formErrors.fieldErrors;
     let errorResponse = "";
 
@@ -51,7 +46,10 @@ export async function subscribeAction(formData: FormData) {
   }
 
   const user = users.find((user) => user.email === email);
-  if (user) return { message: "Email já cadastrado", success: false };
+  if (!user) return { message: "Usuário não encontrado", success: false };
 
-  redirect("/");
+  const isPasswordCorrect = user.password === password;
+  if (!isPasswordCorrect) return { message: "Senha incorreta", success: false };
+
+  return { message: "Login efetuado com sucesso", success: true };
 }

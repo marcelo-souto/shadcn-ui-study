@@ -32,15 +32,17 @@ const Subscription = () => {
   });
 
   const onSubmitAction = async (formData: FormData) => {
-    const result = await form.trigger();
+    const isSubmitable = await form.trigger();
 
-    if (result) {
+    if (isSubmitable) {
       const response = await subscribeAction(formData);
-      return toast({
-        title: response.success ? "Sucesso" : "Erro",
-        description: response.message,
-        variant: response.success ? "default" : "destructive",
-      });
+      if (!response.success) {
+        return toast({
+          title: response.success ? "Sucesso" : "Erro",
+          description: response.message,
+          variant: response.success ? "default" : "destructive",
+        });
+      }
     }
   };
 
@@ -55,16 +57,17 @@ const Subscription = () => {
         animate={{
           opacity: 1,
           y: 0,
-          transition: {
-            duration: 0.3,
-            type: "spring",
-            stiffness: 200,
-          },
+        }}
+        transition={{
+          duration: 0.3,
+          type: "spring",
+          stiffness: 200,
         }}
       >
         <h1 className="text-3xl font-semibold mb-6">Inscreva-se</h1>
         <Form {...form}>
           <form action={onSubmitAction} className="flex flex-col gap-4">
+            
             <FormField
               control={form.control}
               name="name"

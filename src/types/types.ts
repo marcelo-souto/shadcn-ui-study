@@ -45,3 +45,7 @@ export const subscriptionSchema = z.object({
 });
 
 export type TSubscriptionFields = z.infer<typeof subscriptionSchema>;
+
+export const userCredentials = subscriptionSchema.omit({ name: true });
+
+export type TUserCredentials = z.infer<typeof userCredentials>;

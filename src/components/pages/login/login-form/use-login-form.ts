@@ -1,24 +1,22 @@
-import { authService } from "@/services/auth/auth-service";
-import { UserCredentials } from "@/types/types";
+import { loginAction } from "@/lib/actions/login";
+import { userCredentials } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const LoginFieldsSchema = z.object({
-  email: z
-    .string()
-    .nonempty("Campo obrigatório.")
-    .email("Insira um email válido."),
-  password: z.string().nonempty("Campo obrigatório."),
-  remind: z.boolean().default(false),
+const loginSchema = userCredentials.extend({
+  remind: z.boolean(),
 });
 
-type LoginProps = z.infer<typeof LoginFieldsSchema>;
+type TLoginSchema = z.infer<typeof loginSchema>;
 
 export default function useLoginForm() {
-  const form = useForm<LoginProps>({
-    resolver: zodResolver(LoginFieldsSchema),
+  
+  const [error, setError] = useState<string | null>(null);
+
+  const form = useForm<TLoginSchema>({
+    resolver: zodResolver(loginSchema),
     mode: "all",
     defaultValues: {
       email: "",
@@ -27,15 +25,14 @@ export default function useLoginForm() {
     },
   });
 
-  const { mutate, isLoading, isSuccess, data, isError, error } = useMutation({
-    mutationFn: ({ email, password }: UserCredentials) =>
-      authService.login({ email, password }),
-    onSuccess: (data) => console.log(data),
-    onError: (error: Error) => console.log(error),
-  });
+  const onSubmitAction = async (formData: FormData) => {
+    const isSubmitable = await form.trigger();
 
-  const onSubmit = ({ email, password }: LoginProps) =>
-    mutate({ email, password });
+    if (isSubmitable) {
+      const response = await loginAction(formData);
+      if (!response.success) setError(response.message);
+    }
+  };
 
-  return { onSubmit, isLoading, form, isSuccess, isError, data, error };
+  return { form, error, onSubmitAction };
 }

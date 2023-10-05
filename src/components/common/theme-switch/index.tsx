@@ -7,9 +7,10 @@ import { MoonIcon, SunMediumIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-interface ThemeSwitchProps extends React.HTMLAttributes<HTMLLabelElement> {}
+type TThemeSwitchProps = React.HTMLAttributes<HTMLLabelElement> 
 
-const ThemeSwitch = ({ className }: ThemeSwitchProps) => {
+const ThemeSwitch = ({ className }: TThemeSwitchProps) => {
+  
   const { setTheme, theme } = useTheme();
   const [clientTheme, setClientTheme] = useState<undefined | string>();
 
