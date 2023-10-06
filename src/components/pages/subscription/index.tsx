@@ -19,6 +19,7 @@ import { motion } from "framer-motion";
 import { TSubscriptionFields, subscriptionSchema } from "@/types/types";
 
 const Subscription = () => {
+  
   const { toast } = useToast();
 
   const form = useForm<TSubscriptionFields>({

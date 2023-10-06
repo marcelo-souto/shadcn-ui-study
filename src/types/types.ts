@@ -35,6 +35,15 @@ export type Post = {
   userId: number;
 };
 
+export type TGame = {
+  id: number;
+  name: string;
+  background_image: string;
+  dominant_color: string;
+  rating: number;
+  rating_top: number;
+};
+
 export const subscriptionSchema = z.object({
   name: z.string().nonempty({ message: "Nome é obrigatório" }),
   email: z.string().email({ message: "Email inválido" }),
