@@ -1,6 +1,9 @@
 "use client";
 
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+import type { ReactQuillProps } from "react-quill";
 
 import "react-quill/dist/quill.snow.css";
 import "./index.css";
@@ -27,8 +30,8 @@ const toolbarOptions = [
 ];
 
 interface TextEditorProps {
-  onChange: ReactQuill.ReactQuillProps["onChange"];
-  value: ReactQuill.ReactQuillProps["value"];
+  onChange: ReactQuillProps["onChange"];
+  value: ReactQuillProps["value"];
 }
 
 const TextEditor = ({ onChange, value }: TextEditorProps) => {
