@@ -17,7 +17,6 @@ import { AlertOctagon } from "lucide-react";
 import { SubmitButton } from "@/components/ui/submit-button";
 
 const LoginForm = () => {
-
   const { form, error, onSubmitAction } = useLoginForm();
 
   return (
@@ -64,7 +63,6 @@ const LoginForm = () => {
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-
                 <div className="space-y-1 leading-none">
                   <FormLabel>Lembrar de mim</FormLabel>
                 </div>

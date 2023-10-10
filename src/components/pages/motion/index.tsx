@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 const Motion = () => {
+  
   const [isLoading, setIsLoading] = useState(false);
 
   return (
