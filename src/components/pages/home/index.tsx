@@ -95,6 +95,7 @@ const Home = () => {
               {selectedGame?.description}
             </DialogDescription>
           </DialogHeader>
+          
         </DialogContent>
       </Dialog>
     </div>

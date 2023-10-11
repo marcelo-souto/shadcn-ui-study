@@ -1,7 +1,9 @@
-"use client";
 
 import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill"), {
+  ssr: false,
+  loading: () => <p className="text-center font-semibold text-xl">Carregando...</p>,
+});
 
 import type { ReactQuillProps } from "react-quill";
 
@@ -29,17 +31,18 @@ const toolbarOptions = [
   ["clean"],
 ];
 
-interface TextEditorProps {
+interface TextEditorProps extends ReactQuillProps {
   onChange: ReactQuillProps["onChange"];
   value: ReactQuillProps["value"];
 }
 
-const TextEditor = ({ onChange, value }: TextEditorProps) => {
+const TextEditor = ({ onChange, value, ...props }: TextEditorProps) => {
   return (
     <ReactQuill
       value={value}
       onChange={onChange}
       modules={{ toolbar: toolbarOptions }}
+      {...props}
     />
   );
 };
