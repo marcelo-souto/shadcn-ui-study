@@ -23,33 +23,36 @@ const sliderConfig = {
 
 const Swiper = ({ data }: { data: TGame[] }) => {
   return (
-    <main className="max-w-5xl w-full mx-auto pt-40">
+    <main className="min-h-screen max-w-5xl w-full m-auto">
       <Slider settings={sliderConfig}>
-        {data.map((game) => (
-          <SliderItem key={game.id}>
-            <Card className="min-h-[260px]">
-              <Image
-                src={game.background_image}
-                alt={game.name}
-                width="1600"
-                height="1600"
-                className="w-full min-h-[260px] overflow-hidden object-cover object-center"
-              />
+        {data.map((game) => {
+          return (
+            <SliderItem key={game.id}>
+              <Card>
+                <div className="relative min-h-[260px]">
+                  <Image
+                    src={game.background_image}
+                    alt={game.name}
+                    fill={true}
+                    className="object-cover object-center"
+                  />
+                </div>
 
-              <CardHeader>
-                <CardTitle className="text-xl dark:text-zinc-200 text-zinc-900 truncate">
-                  {game.name}
-                </CardTitle>
-              </CardHeader>
+                <CardHeader>
+                  <CardTitle className="text-xl dark:text-zinc-200 text-zinc-900 truncate">
+                    {game.name}
+                  </CardTitle>
+                </CardHeader>
 
-              <CardContent>
-                <p className="text-base">
-                  {game.rating}/{game.rating_top}
-                </p>
-              </CardContent>
-            </Card>
-          </SliderItem>
-        ))}
+                <CardContent>
+                  <p className="text-base">
+                    {game.rating}/{game.rating_top}
+                  </p>
+                </CardContent>
+              </Card>
+            </SliderItem>
+          );
+        })}
       </Slider>
     </main>
   );

@@ -1,11 +1,16 @@
+import Marquee from "react-fast-marquee";
 
-const Page = () => {
+const InfinityTextPage = () => {
   return (
-    <div style={{ background: "red" }}>
-      <h1>Hello, world!</h1>
-      <p>This is a basic page.</p>
-    </div>
+    <Marquee
+      className="max-w-7xl mx-auto"
+      autoFill={true}
+      pauseOnHover={true}
+      direction="right"
+    >
+      <p className="text-xl font-bold mr-4">INSCREVA-SE</p>
+    </Marquee>
   );
 };
 
-export default Page;
+export default InfinityTextPage;
