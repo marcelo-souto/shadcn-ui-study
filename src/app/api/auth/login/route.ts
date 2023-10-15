@@ -5,18 +5,27 @@ import { User } from "@/types/types";
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
 const users: User[] = [
-  { id: 1, email: "marcelosouto676@gmail.com", password: "123456" },
+  {
+    id: 1,
+    email: "marcelosouto676@gmail.com",
+    password: "123456",
+    role: "admin",
+    name: "Marcelo Souto",
+  },
 ];
 
 export async function POST(request: NextRequest) {
-
   const { email, password } = await request.json();
 
   const user = users.find(
     (user) => user.email === email && user.password === password
   );
 
-  if (!user) return NextResponse.json({ message: "Usuário não encontrado." }, { status: 404 });
+  if (!user)
+    return NextResponse.json(
+      { message: "Usuário não encontrado." },
+      { status: 404 }
+    );
 
   const token = sign({ id: user.id }, SECRET_KEY, {
     expiresIn: "1d",
