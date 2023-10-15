@@ -42,6 +42,7 @@
     "framer-motion": "^10.16.4",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "lottie-react": "^2.4.0",
     "lucide-react": "^0.272.0",
     "material-symbols": "^0.13.0",
     "next": "^13.5.4",
