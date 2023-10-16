@@ -5,7 +5,13 @@ import verifyToken from "@/utils/functions/verify-token";
 const SECRET_KEY = process.env.SECRET_KEY as string;
 
 const users: User[] = [
-  { id: 1, email: "marcelosouto676@gmail.com", password: "123456" },
+  {
+    id: 1,
+    email: "marcelosouto676@gmail.com",
+    password: "123456",
+    name: "Marcelo Souto",
+    role: "student",
+  },
 ];
 
 export async function GET(request: NextRequest) {
