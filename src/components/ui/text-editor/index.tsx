@@ -1,8 +1,9 @@
-
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
-  loading: () => <p className="text-center font-semibold text-xl">Carregando...</p>,
+  loading: () => (
+    <p className="text-center font-semibold text-xl">Carregando...</p>
+  ),
 });
 
 import type { ReactQuillProps } from "react-quill";
