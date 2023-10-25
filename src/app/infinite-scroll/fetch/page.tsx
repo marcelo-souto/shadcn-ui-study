@@ -32,7 +32,7 @@ export default function InfiniteScrollPage() {
   const fetchProducts = async (skip = 0, limit = 12) => {
     setLoading(true);
     const response = await fetch(
-      `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
+      `https://dummyjson.com/products?limit=${limit}&skip=${skip}`,
     );
 
     const data = (await response.json()) as ProductResponse;
