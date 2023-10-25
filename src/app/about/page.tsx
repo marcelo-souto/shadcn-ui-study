@@ -79,8 +79,8 @@ export default function AboutPage() {
   return (
     <main className="flex flex-col lg:flex-row content-start">
       <motion.div
-        initial={{ opacity: 0, y: 200 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, type: "spring", stiffness: 50 }}
         className="relative min-h-[260px] overflow-hidden row-span-2 group w-full lg:w-3/5"
       >
@@ -92,7 +92,7 @@ export default function AboutPage() {
         />
       </motion.div>
 
-      <div className="flex flex-col gap-8 w-full lg:w-2/5 p-6 md:p-10 lg:p-14">
+      <div className="flex flex-col gap-8 w-full lg:w-2/5 p-6 md:p-10 lg:p-14 bg-gradient-to-tr from-zinc-100 via-zinc-100 to-zinc-50 dark:from-black dark:via-zinc-950 dark:to-zinc-950">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
