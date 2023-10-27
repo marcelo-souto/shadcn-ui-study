@@ -1,45 +1,49 @@
-"use client";
+import { Stepper, Step } from "@/components/ui/stepper";
 
-import { Button } from "@/components/ui/button";
-import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogCloseButton,
-} from "@/components/ui/dialog";
-
-import { useState } from "react";
+const course = {
+  title: "Programando com Next.js",
+  classes: [
+    {
+      id: 1,
+      title: "Introdução ao Next.js",
+      duration: 10,
+      completed: true,
+    },
+    {
+      id: 2,
+      title: "Rotas dinâmicas",
+      duration: 20,
+      completed: true,
+    },
+    {
+      id: 3,
+      title: "Roteando páginas",
+      duration: 15,
+      completed: false,
+    },
+    {
+      id: 4,
+      title: "Routes Handlers",
+      duration: 36,
+      completed: false,
+    },
+  ],
+};
 
 export default function TestePage() {
-
-  const [openModal, setOpenModal] = useState(false);
-
   return (
-    <div className="pt-32 max-w-6xl mx-auto">
-      <Button onClick={() => setOpenModal(true)}>Abrir</Button>
-
-      <Dialog modal={true} open={openModal} onOpenChange={setOpenModal}>
-
-        <DialogContent>
-
-          <DialogHeader>
-            <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter>
-            <Button size="sm" className="w-fit" asChild>
-              <DialogCloseButton>Fechar</DialogCloseButton>
-            </Button>
-          </DialogFooter>
-
-        </DialogContent>
-      </Dialog>
+    <div className="py-32 max-w-6xl mx-auto">
+      <Stepper>
+        {course.classes.map((course, index, arr) => (
+          <Step
+            key={course.id}
+            title={course.title}
+            duration={course.duration}
+            completed={course.completed}
+            isLast={index === arr.length - 1}
+          />
+        ))}
+      </Stepper>
     </div>
   );
 }
