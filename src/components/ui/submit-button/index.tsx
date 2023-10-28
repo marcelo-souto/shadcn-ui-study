@@ -2,7 +2,7 @@ import React from "react";
 import { Button, buttonVariants } from "../button";
 import { VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { useFormStatus } from "react-dom";
+import {  useFormStatus } from "react-dom";
 
 interface SubmitButtonProps
   extends React.HTMLAttributes<HTMLButtonElement>,
