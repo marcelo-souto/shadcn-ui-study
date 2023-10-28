@@ -2,7 +2,7 @@ import { Stepper, Step } from "@/components/ui/stepper";
 
 const course = {
   title: "Programando com Next.js",
-  classes: [
+  lessons: [
     {
       id: 1,
       title: "Introdução ao Next.js",
@@ -19,7 +19,7 @@ const course = {
       id: 3,
       title: "Roteando páginas",
       duration: 15,
-      completed: false,
+      completed: true,
     },
     {
       id: 4,
@@ -34,13 +34,13 @@ export default function TestePage() {
   return (
     <div className="py-32 max-w-6xl mx-auto">
       <Stepper>
-        {course.classes.map((course, index, arr) => (
+        {course.lessons.map(({ id, title, duration, completed }) => (
           <Step
-            key={course.id}
-            title={course.title}
-            duration={course.duration}
-            completed={course.completed}
-            isLast={index === arr.length - 1}
+            key={id}
+            course={course.title}
+            title={title}
+            duration={duration}
+            completed={completed}
           />
         ))}
       </Stepper>
