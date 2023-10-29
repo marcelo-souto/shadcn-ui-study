@@ -33,17 +33,19 @@ const course = {
 export default function TestePage() {
   return (
     <div className="py-32 max-w-6xl mx-auto">
-      <Stepper>
-        {course.lessons.map(({ id, title, duration, completed }) => (
-          <Step
-            key={id}
-            course={course.title}
-            title={title}
-            duration={duration}
-            completed={completed}
-          />
-        ))}
-      </Stepper>
+      <section className="grid grid-cols-[2fr_1fr] rounded-2xl bg-zinc-900/30">
+        <Stepper className="relative col-start-2 px-12 py-16 before:absolute before:block before:w-[2px] before:h-4/5 before:bg-white/5 before:-ml-16">
+          {course.lessons.map(({ id, title, duration, completed }) => (
+            <Step
+              key={id}
+              course={course.title}
+              title={title}
+              duration={duration}
+              completed={completed}
+            />
+          ))}
+        </Stepper>
+      </section>
     </div>
   );
 }
