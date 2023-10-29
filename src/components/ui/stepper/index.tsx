@@ -1,5 +1,8 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { PlayCircle } from "lucide-react";
+import { motion } from "framer-motion";
 import React from "react";
 
 type Class = {
@@ -7,6 +10,28 @@ type Class = {
   title: string;
   duration: number;
   completed: boolean;
+};
+
+const container = {
+  show: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: -20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+      type: "spring",
+      stiffness: 100,
+    },
+  },
 };
 
 type CircleButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
@@ -43,12 +68,26 @@ type StepProps = Omit<Class, "id"> & {
 // Utilizando group e group-last para estilizar o after apenas no último elemento
 
 const Step = ({ completed, duration, title, course }: StepProps) => {
+  const [isAnimationCompleted, setIsAnimationCompleted] = React.useState(false);
+
   return (
-    <li
+    <motion.li
+      variants={item}
+      onAnimationComplete={() => setIsAnimationCompleted(true)}
       data-completed={completed}
       className="relative grid grid-cols-[auto_1fr] grid-rows-[calc(7rem-3.4rem)_1fr] first:grid-rows-[auto_1fr] gap-x-6 list-none group"
     >
-      <span className="z-[1] relative top-[-2.875rem] justify-self-center group-first:hidden block h-28 w-[3px] rounded-full bg-zinc-800" />
+      <motion.span className="z-[1] relative top-[-2.875rem] justify-self-center group-first:hidden block h-28 w-[3px] rounded-full bg-transparent overflow-hidden">
+        <motion.span
+          initial={{ y: -120 }}
+          animate={{ y: isAnimationCompleted ? 0 : -120 }}
+          transition={{
+            duration: 0.5,
+            ease: "easeInOut",
+          }}
+          className="absolute top-0 w-full h-full bg-zinc-800"
+        ></motion.span>
+      </motion.span>
 
       <div className="flex flex-col items-center col-start-1 row-start-2">
         <CircleButton disabled={!completed} />
@@ -66,7 +105,7 @@ const Step = ({ completed, duration, title, course }: StepProps) => {
           <p>{duration} min</p>
         </div>
       </div>
-    </li>
+    </motion.li>
   );
 };
 
@@ -79,14 +118,17 @@ type StepperProps = React.HTMLAttributes<HTMLUListElement>;
 
 const Stepper = ({ children, className }: StepperProps) => {
   return (
-    <ul
+    <motion.ul
+      variants={container}
+      initial="hidden"
+      animate="show"
       className={cn(
-        "[&>[data-completed='true']+[data-completed='true']>:first-child]:bg-emerald-500",
+        "[&>[data-completed='true']+[data-completed='true']>:first-child>*]:bg-emerald-500",
         className
       )}
     >
       {children}
-    </ul>
+    </motion.ul>
   );
 };
 
