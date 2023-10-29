@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { PlayCircle } from "lucide-react";
+
 import { motion } from "framer-motion";
 import React from "react";
 
@@ -26,48 +26,53 @@ const item = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.3,
+      duration: 0.5,
       ease: "easeInOut",
-      type: "spring",
-      stiffness: 100,
     },
   },
 };
 
 type CircleButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const CircleButton = (props: CircleButtonProps) => {
+const CircleButton = ({ className, ...props }: CircleButtonProps) => {
   return (
     <button
-      className="z-[2] rounded-2xl w-12 h-12 transition-all duration-200 ease-in-out outline-offset-4 group 
-      bg-emerald-700 
-      group-data-[completed=false]:bg-zinc-800
-      group-data-[completed=false]:pointer-events-none"
+      className={cn(
+        "z-[99] rounded-xl w-12 h-12 transition-all duration-200 ease-in-out outline-offset-4 group/btn bg-emerald-700 group-data-[completed=false]:bg-zinc-800 group-data-[completed=false]:pointer-events-none",
+        className
+      )}
       {...props}
     >
       <span
-        className="flex justify-center items-center rounded-2xl w-12 h-12 -translate-y-[6px] 
-        group-active:-translate-y-[2px] 
+        className="flex justify-center items-center rounded-xl w-12 h-12 -translate-y-[6px] 
+        group-active/btn:-translate-y-[2px] 
       bg-emerald-500 
       hover:bg-emerald-600
       text-emerald-800
+      text-2xl
       group-data-[completed=false]:text-zinc-500
       group-data-[completed=false]:bg-zinc-700
-        group-data-[completed=false]:pointer-events-none"
+
+        material-symbols-rounded"
       >
-        <PlayCircle size={24} />
+        play_circle
       </span>
     </button>
   );
 };
 
-type StepProps = Omit<Class, "id"> & {
+type TrackerItemProps = Omit<Class, "id"> & {
   course: string;
 };
 
 // Utilizando group e group-last para estilizar o after apenas no último elemento
 
-const Step = ({ completed, duration, title, course }: StepProps) => {
+const TrackerItem = ({
+  completed,
+  duration,
+  title,
+  course,
+}: TrackerItemProps) => {
   const [isAnimationCompleted, setIsAnimationCompleted] = React.useState(false);
 
   return (
@@ -86,12 +91,10 @@ const Step = ({ completed, duration, title, course }: StepProps) => {
             ease: "easeInOut",
           }}
           className="absolute top-0 w-full h-full bg-zinc-800"
-        ></motion.span>
+        />
       </motion.span>
 
-      <div className="flex flex-col items-center col-start-1 row-start-2">
-        <CircleButton disabled={!completed} />
-      </div>
+      <CircleButton disabled={!completed} className="col-start-1 row-start-2" />
 
       <div className="flex flex-col gap-2 col-start-2 row-start-2">
         <p className="text-zinc-300 text-sm group-data-[completed=false]:text-zinc-500">
@@ -101,7 +104,7 @@ const Step = ({ completed, duration, title, course }: StepProps) => {
           {title}
         </h3>
         <div className="flex flex-col gap-2 text-sm group-data-[completed=false]:text-zinc-400">
-          <span className="block w-14 h-[2px] bg-zinc-700"></span>
+          <span className="block w-14 h-[2px] bg-zinc-700" />
           <p>{duration} min</p>
         </div>
       </div>
@@ -109,14 +112,14 @@ const Step = ({ completed, duration, title, course }: StepProps) => {
   );
 };
 
-Step.displayName = "Step";
+TrackerItem.displayName = "TrackerItem";
 
 // Acessando de forma arbitraria o último elemento do grupo
 // className="[&>*:last-child>:first-child]:after:hidden"
 
-type StepperProps = React.HTMLAttributes<HTMLUListElement>;
+type TrackerProps = React.HTMLAttributes<HTMLUListElement>;
 
-const Stepper = ({ children, className }: StepperProps) => {
+const Tracker = ({ children, className }: TrackerProps) => {
   return (
     <motion.ul
       variants={container}
@@ -132,6 +135,6 @@ const Stepper = ({ children, className }: StepperProps) => {
   );
 };
 
-Stepper.displayName = "Stepper";
+Tracker.displayName = "Tracker";
 
-export { Step, Stepper };
+export { TrackerItem, Tracker };

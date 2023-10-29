@@ -1,4 +1,4 @@
-import { Stepper, Step } from "@/components/ui/stepper";
+import { Tracker, TrackerItem } from "@/components/ui/tracker";
 
 const course = {
   title: "Programando com Next.js",
@@ -30,13 +30,13 @@ const course = {
   ],
 };
 
-export default function TestePage() {
+export default function CoursePage() {
   return (
     <div className="py-32 max-w-6xl mx-auto">
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr] md:rounded-2xl bg-zinc-900/30">
-        <Stepper className="relative md:col-start-2 px-12 py-16 before:absolute before:hidden md:before:block before:w-[2px] before:h-4/5 before:bg-white/5 before:-ml-16">
+        <Tracker className="relative md:col-start-2 px-12 py-16 before:absolute before:hidden md:before:block before:w-[2px] before:h-4/5 before:bg-white/5 before:-ml-16">
           {course.lessons.map(({ id, title, duration, completed }) => (
-            <Step
+            <TrackerItem
               key={id}
               course={course.title}
               title={title}
@@ -44,7 +44,7 @@ export default function TestePage() {
               completed={completed}
             />
           ))}
-        </Stepper>
+        </Tracker>
       </section>
     </div>
   );
