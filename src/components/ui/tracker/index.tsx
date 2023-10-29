@@ -1,16 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-
-import { motion } from "framer-motion";
 import React from "react";
-
-type Class = {
-  id: number;
-  title: string;
-  duration: number;
-  completed: boolean;
-};
+import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import type { Lesson } from "@/types/types";
 
 const container = {
   show: {
@@ -61,7 +54,7 @@ const CircleButton = ({ className, ...props }: CircleButtonProps) => {
   );
 };
 
-type TrackerItemProps = Omit<Class, "id"> & {
+type TrackerItemProps = Omit<Lesson, "id"> & {
   course: string;
 };
 
@@ -73,6 +66,7 @@ const TrackerItem = ({
   title,
   course,
 }: TrackerItemProps) => {
+  
   const [isAnimationCompleted, setIsAnimationCompleted] = React.useState(false);
 
   return (

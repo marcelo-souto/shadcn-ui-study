@@ -60,3 +60,15 @@ export type TSubscriptionFields = z.infer<typeof subscriptionSchema>;
 export const userCredentials = subscriptionSchema.omit({ name: true });
 
 export type TUserCredentials = z.infer<typeof userCredentials>;
+
+export type Lesson = {
+  id: number;
+  title: string;
+  duration: number;
+  completed: boolean;
+};
+
+export type Course = {
+  title: string;
+  lessons: Lesson[]
+}
