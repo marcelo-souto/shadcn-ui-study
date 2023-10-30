@@ -45,7 +45,6 @@ const CircleButton = ({ className, ...props }: CircleButtonProps) => {
       text-2xl
       group-data-[completed=false]:text-zinc-500
       group-data-[completed=false]:bg-zinc-700
-
         material-symbols-rounded"
       >
         play_circle
