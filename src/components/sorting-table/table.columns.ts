@@ -5,7 +5,7 @@ import { format } from "date-fns";
 export const columns: ColumnDef<Data>[] = [
   {
     accessorFn: (data) => data.id,
-    header: "ID",
+    header: "Id",
   },
   {
     accessorFn: (data) => `${data.first_name} ${data.last_name}`,
@@ -20,7 +20,8 @@ export const columns: ColumnDef<Data>[] = [
     header: "Gender",
   },
   {
-    accessorFn: (data) => format(new Date(data.birthdate), "MM/dd/yyyy"),
+    accessorFn: (data) => data.birthdate,
     header: "Birthdate",
+    cell: (data) => format(new Date(data.getValue() as string), "dd/MM/yyyy"),
   },
 ];
